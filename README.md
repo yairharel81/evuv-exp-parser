@@ -57,6 +57,7 @@ Assert.assertTrue(bindedExp.getValue());
 			   }
 			};
       
+      SimpleConditionParser parser = new SimpleConditionParser();
       Map<String,Object> bindings = generateBindings();
       Expression<Boolean> expr = parser.parseCondition(json,  false);
       BindedExpression<Boolean> expr = expr.bind(bindings);
