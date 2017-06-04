@@ -25,33 +25,19 @@ Assert.assertTrue(bindedExp.getValue());
     
 ## usage examples (druid format json) 
  ```java
-  String json = {
-			   "filter": {
+  String json = { "filter": {
 			      "type": "and",
 			      "fields": [
 			         {
-			            "op": "<",
-			            "measure": "session_integer_23",
-			            "type": "measure",
-			            "value": 200
+			            "dimension": "sh",
+			            "type": "dimension",
+			            "value": "some_value"
 			         },
 			         {
 			            "op": ">",
-			            "measure": "dumber_11",
+			            "measure": "m1",
 			            "type": "measure",
 			            "value": 10
-			         },
-			         {
-			            "op": "=",
-			            "measure": "dumber_12",
-			            "type": "measure",
-			            "value": 12
-			         },
-			         {
-			            "op": ">",
-			            "measure": "dumber_4",
-			            "type": "measure",
-			            "value": 0
 			         }
 			      ]
 			   }
