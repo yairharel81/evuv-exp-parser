@@ -15,8 +15,8 @@ evuv parser support parsing json expression as a json Druid (druid.io) format fi
 ```java
 ComparableExpression<GenericNumber> left = ExpressionBuilder.prop("A", GenericNumber.class);
 ComparableExpression<GenericNumber> right = ExpressionBuilder.value(new GenericNumber(10.0));
-Expression<Boolean> smLeft = ExpressionBuilder.smaller(left, right);
-Expression<Boolean> enot = ExpressionBuilder.not(smLeft);
+Expression<Boolean> sm = ExpressionBuilder.smaller(left, right);
+Expression<Boolean> enot = ExpressionBuilder.not(sm);
 Map<String, Object> bindings = new HashMap<>();
 bindings.put("A", 1000);
 BindedExpression<Boolean> bindedExp = enot.bind(bindings);
