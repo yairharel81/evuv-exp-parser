@@ -1,5 +1,5 @@
 # evuv-exp-parser
-evuv parser support parsing simple boolean expression.
+evuv parser support parsing simple boolean expressions.
 Supported operators:
 - and
 - or
@@ -8,7 +8,7 @@ Supported operators:
 - < (smaller)
 - = (equals)
 
-evuv parser support parsing json expression as a json Druid (druid.io) format filter expression.
+evuv parser also support parsing json expression formatted as a json Druid (druid.io) filter expression.
 
 
 ## usage examples (expression builder)
