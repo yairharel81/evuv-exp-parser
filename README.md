@@ -48,7 +48,7 @@ Assert.assertTrue(bindedExp.getValue());
       bindings.put("sh", "some_value");
       bindings.put("m1", 100);
       Expression<Boolean> expr = parser.parseCondition(json,  false);
-      BindedExpression<Boolean> expr = expr.bind(bindings);
-      Assert.assertTrue(expr.getValue());
+      BindedExpression<Boolean> bindedExpr = expr.bind(bindings);
+      Assert.assertTrue(bindedExpr.getValue());
    ```
    
