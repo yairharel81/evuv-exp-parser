@@ -27,6 +27,8 @@ public interface ConditionParser<T> {
 	
 	public static final String FILTER_NOT_OP = "not";
 	
+	public static final String FILTER_CONTAINS_OP = "contains";
+	
 	public static final String MEASURE_TYPE = "measure";
 	public static final String SELECTOR_TYPE = "selector";
 	
@@ -34,6 +36,8 @@ public interface ConditionParser<T> {
 	public static final String DRUID_QUERY_JSON_FILTER_PROPNAME = "filter";
 	public  static final String DRUID_TIME_FORMAT  = "yyyy-MM-dd'T'HH:mm:ss";
 	public static final String FILTER_FIELD_KEY = "field";
+	
+	
 	
 
 	public abstract T parseCondition(String json, PropertyNamingConverter converter, 

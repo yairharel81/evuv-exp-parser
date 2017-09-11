@@ -4,6 +4,7 @@ import com.evuv.EventProperty;
 import com.evuv.expressions.AndExpression;
 import com.evuv.expressions.BiggerThanExpression;
 import com.evuv.expressions.ComparableExpression;
+import com.evuv.expressions.ContainsExpression;
 import com.evuv.expressions.EqualityExpression;
 import com.evuv.expressions.Expression;
 import com.evuv.expressions.NotExpression;
@@ -47,6 +48,10 @@ public class ExpressionBuilder {
 	
 	public static <T> Expression<Boolean> equals(ComparableExpression<T> left, ComparableExpression<T> right) {
 		return new EqualityExpression<>(left, right);
+	}
+	
+	public static Expression<Boolean> contains(ComparableExpression<String> left, ComparableExpression<String> right) {
+		return new ContainsExpression<>(left, right);
 	}
 	
 	public static <T extends Comparable<T>> SimpleValueExpression<T> value(T t) {

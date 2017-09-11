@@ -10,6 +10,7 @@ import com.evuv.GenericNumber;
 import com.evuv.exceptions.ParserException;
 import com.evuv.expressions.AndExpression;
 import com.evuv.expressions.BiggerThanExpression;
+import com.evuv.expressions.ContainsExpression;
 import com.evuv.expressions.EqualityExpression;
 import com.evuv.expressions.Expression;
 import com.evuv.expressions.NotExpression;
@@ -84,7 +85,7 @@ public class SimpleConditionParser implements ConditionParser<Expression<Boolean
 		SimplePropertyExpression<GenericNumber> left = new SimplePropertyExpression<GenericNumber>(ev);
 		GenericNumber expectedValue = new GenericNumber (filter.get("value"));
 		SimpleValueExpression<GenericNumber> right = new SimpleValueExpression<GenericNumber>(expectedValue);
-		Expression<Boolean> expr = getSImpleOperatorExpression(op, left, right);
+		Expression<Boolean> expr = getSimpleOperatorExpression(op, left, right);
 		return expr;
 	}
 	
@@ -99,7 +100,13 @@ public class SimpleConditionParser implements ConditionParser<Expression<Boolean
 		SimplePropertyExpression<String> left = new SimplePropertyExpression<String>(ev);
 		String expectedValue = filter.getString("value");
 		SimpleValueExpression<String> right = new SimpleValueExpression<String>(expectedValue);
-		Expression<Boolean> expr = new EqualityExpression<String>(left, right);
+		String op = filter.optString("op", null);
+		Expression<Boolean> expr = null;
+		if ( op != null && op.equals(FILTER_CONTAINS_OP)) {
+			expr = new ContainsExpression<String>(left, right);
+		} else {
+			expr = new EqualityExpression<String>(left, right);
+		}
 		return expr;
 	}
 	
@@ -141,7 +148,7 @@ public class SimpleConditionParser implements ConditionParser<Expression<Boolean
 	
 	
 	
-	private Expression<Boolean> getSImpleOperatorExpression(String op, 
+	private Expression<Boolean> getSimpleOperatorExpression(String op, 
 			SimplePropertyExpression<GenericNumber> left, SimpleValueExpression<GenericNumber> right) throws ParserException {
 		switch(op) {
 		case "=" : return new EqualityExpression<>(left, right); 

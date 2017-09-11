@@ -7,7 +7,10 @@ public class BiggerThanOperator<T> implements Operator<ComparableExpression<T>, 
 
 	@Override
 	public boolean op(ComparableExpression<T> left, ComparableExpression<T> right) {
-		return left.compareTo(right.getValue()) > 0;
+		if (left.getValue() != null && right.getValue() != null) {
+			return left.compareTo(right.getValue()) > 0;
+		}
+		return false;
 	}
 
 	@Override
