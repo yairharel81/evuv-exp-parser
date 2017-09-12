@@ -65,9 +65,9 @@ public class SimplePropertyExpression<T extends Comparable<T>>  implements Compa
 		EventProperty<T> newEv = new EventProperty<>();
 		newEv.setPropertyName(ev.getPropertyName());
 		if ( value == null ) {
-			throw new EventBindingException ("cannot bind value for  " + ev.getPropertyName());
-		}
-		if (value instanceof Number) {
+			// support missing value
+			newEv.setPropertyValue(null);
+		} else  if (value instanceof Number) {
 			newEv.setPropertyValue((T) new GenericNumber(value));
 		} else if (value instanceof String ) {
 			newEv.setPropertyValue((T) value);
