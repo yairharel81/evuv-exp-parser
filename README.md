@@ -7,6 +7,7 @@ Supported operators:
 - \> (bigger)
 - < (smaller)
 - = (equals)
+- contains
 
 evuv parser also support parsing json expression formatted as a json Druid (druid.io) filter expression.
 
@@ -38,6 +39,12 @@ Assert.assertTrue(bindedExp.getValue());
 			            "measure": "m1",
 			            "type": "measure",
 			            "value": 10
+			         },
+			         {
+			            "op": "contains",
+			            "dimension": "dim2",
+			            "type": "dimension",
+			            "value": "xyz"
 			         }
 			      ]
 			   }
@@ -46,6 +53,7 @@ Assert.assertTrue(bindedExp.getValue());
       SimpleConditionParser parser = new SimpleConditionParser();
       Map<String,Object> bindings = new HashMap<String,Object>();
       bindings.put("sh", "some_value");
+      bindings.put("dim2", "orxyzevi");
       bindings.put("m1", 100);
       Expression<Boolean> expr = parser.parseCondition(json,  false);
       BindedExpression<Boolean> bindedExpr = expr.bind(bindings);
