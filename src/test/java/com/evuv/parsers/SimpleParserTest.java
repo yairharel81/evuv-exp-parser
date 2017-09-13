@@ -847,6 +847,128 @@ public class SimpleParserTest extends BaseTest {
     }
 	
 	
+	@Test
+    public void testExists() throws IOException, JSONException, ParserException, EventBindingException {
+        
+		/*
+		 *{
+			   "filter": {
+			      "type": "and",
+			      "fields": [
+			         {
+			            "op": "<",
+			            "measure": "session_integer_23",
+			            "type": "measure",
+			            "value": 200
+			         },
+			         {
+			            "op": "exists",
+			            "measure": "dumber_11",
+			            "type": "dimension"
+			         }
+			      ]
+			   }
+			}
+		 */
+		
+		 
+
+        String event = loadEvent("event2.txt");
+
+        Map<String, Object> eventAsMap = convertJsonToMap(event);
+
+        JSONObject query = new JSONObject();
+        JSONObject inner = new JSONObject();
+        query.put("filter", inner);
+        inner.put("type", "and");
+        JSONArray fields = new JSONArray();
+        inner.put("fields", fields);
+        JSONObject left = new JSONObject();
+        left.put("type", "measure");
+        left.put("measure", "session_integer_23");
+        left.put("op", "<");
+        left.put("value", 200);
+        fields.put(left);
+        JSONObject right = new JSONObject();
+        right.put("type", "selector");
+        right.put("dimension", "dumber_11");
+        right.put("op", "exists");
+        fields.put(right);
+        
+    
+        
+        
+        BindedExpression<Boolean> expr = parser.parseCondition(query.toString(),  false).bind(eventAsMap);
+        List<String> flat = expr.toFlatExression();
+       flat.forEach(exp -> {
+    	   System.out.println(exp);
+       });
+
+        Assert.assertTrue( expr.getValue());
+    }
+	
+	
+	@Test
+    public void testNotExists() throws IOException, JSONException, ParserException, EventBindingException {
+        
+		/*
+		 *{
+			   "filter": {
+			      "type": "and",
+			      "fields": [
+			         {
+			            "op": "<",
+			            "measure": "session_integer_23",
+			            "type": "measure",
+			            "value": 200
+			         },
+			         {
+			            "op": "exists",
+			            "measure": "dumber_11111",
+			            "type": "dimension"
+			         }
+			      ]
+			   }
+			}
+		 */
+		
+		 
+
+        String event = loadEvent("event2.txt");
+
+        Map<String, Object> eventAsMap = convertJsonToMap(event);
+
+        JSONObject query = new JSONObject();
+        JSONObject inner = new JSONObject();
+        query.put("filter", inner);
+        inner.put("type", "and");
+        JSONArray fields = new JSONArray();
+        inner.put("fields", fields);
+        JSONObject left = new JSONObject();
+        left.put("type", "measure");
+        left.put("measure", "session_integer_23");
+        left.put("op", "<");
+        left.put("value", 200);
+        fields.put(left);
+        JSONObject right = new JSONObject();
+        right.put("type", "selector");
+        right.put("dimension", "dumber_111111111");
+        right.put("op", "exists");
+        fields.put(right);
+        
+    
+        
+        
+        BindedExpression<Boolean> expr = parser.parseCondition(query.toString(),  false).bind(eventAsMap);
+        List<String> flat = expr.toFlatExression();
+       flat.forEach(exp -> {
+    	   System.out.println(exp);
+       });
+
+        Assert.assertTrue(! expr.getValue());
+    }
+	
+	
 	
 	
 	

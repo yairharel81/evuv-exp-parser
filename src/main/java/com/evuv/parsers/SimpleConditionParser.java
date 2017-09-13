@@ -12,6 +12,7 @@ import com.evuv.expressions.AndExpression;
 import com.evuv.expressions.BiggerThanExpression;
 import com.evuv.expressions.ContainsExpression;
 import com.evuv.expressions.EqualityExpression;
+import com.evuv.expressions.ExistsExpression;
 import com.evuv.expressions.Expression;
 import com.evuv.expressions.NotExpression;
 import com.evuv.expressions.OrExpression;
@@ -98,12 +99,14 @@ public class SimpleConditionParser implements ConditionParser<Expression<Boolean
 			ev.setPropertyName(converter.convert(propertyName));
 		}
 		SimplePropertyExpression<String> left = new SimplePropertyExpression<String>(ev);
-		String expectedValue = filter.getString("value");
+		String expectedValue = filter.optString("value");
 		SimpleValueExpression<String> right = new SimpleValueExpression<String>(expectedValue);
 		String op = filter.optString("op", null);
 		Expression<Boolean> expr = null;
 		if ( op != null && op.equals(FILTER_CONTAINS_OP)) {
 			expr = new ContainsExpression<String>(left, right);
+		} else if (op != null && op.equals(FILTER_EXISTS_OP)){
+			expr = new ExistsExpression<String>(left);
 		} else {
 			expr = new EqualityExpression<String>(left, right);
 		}

@@ -26,6 +26,7 @@ public class SimplePropertyExpression<T extends Comparable<T>>  implements Compa
 	public int compareTo(T o) {
 		return ev.getPropertyValue().compareTo(o);
 	}
+	
 
 	@SuppressWarnings("rawtypes")
 	@Override
