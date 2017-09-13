@@ -8,6 +8,7 @@ Supported operators:
 - < (smaller)
 - = (equals)
 - contains
+- exists
 
 evuv parser also support parsing json expression formatted as a json Druid (druid.io) filter expression.
 
@@ -31,8 +32,13 @@ Assert.assertTrue(bindedExp.getValue());
 			      "fields": [
 			         {
 			            "dimension": "sh",
-			            "type": "dimension",
+			            "type": "selector",
 			            "value": "some_value"
+			         },
+				 {
+			            "dimension": "dim1",
+			            "type": "selector",
+			            "op": "exists"
 			         },
 			         {
 			            "op": ">",
@@ -43,7 +49,7 @@ Assert.assertTrue(bindedExp.getValue());
 			         {
 			            "op": "contains",
 			            "dimension": "dim2",
-			            "type": "dimension",
+			            "type": "selector",
 			            "value": "xyz"
 			         }
 			      ]
@@ -54,6 +60,7 @@ Assert.assertTrue(bindedExp.getValue());
       Map<String,Object> bindings = new HashMap<String,Object>();
       bindings.put("sh", "some_value");
       bindings.put("dim2", "orxyzevi");
+      bindings.put("dim1", "some_value");
       bindings.put("m1", 100);
       Expression<Boolean> expr = parser.parseCondition(json,  false);
       BindedExpression<Boolean> bindedExpr = expr.bind(bindings);
