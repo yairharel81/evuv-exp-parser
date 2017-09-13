@@ -8,6 +8,7 @@ Supported operators:
 - < (smaller)
 - = (equals)
 - contains
+- exists
 
 evuv parser also support parsing json expression formatted as a json Druid (druid.io) filter expression.
 
@@ -31,8 +32,13 @@ Assert.assertTrue(bindedExp.getValue());
 			      "fields": [
 			         {
 			            "dimension": "sh",
-			            "type": "dimension",
+			            "type": "selector",
 			            "value": "some_value"
+			         },
+				 {
+			            "dimension": "dim1",
+			            "type": "selector",
+			            "op": "exists"
 			         },
 			         {
 			            "op": ">",
@@ -43,7 +49,7 @@ Assert.assertTrue(bindedExp.getValue());
 			         {
 			            "op": "contains",
 			            "dimension": "dim2",
-			            "type": "dimension",
+			            "type": "selector",
 			            "value": "xyz"
 			         }
 			      ]
