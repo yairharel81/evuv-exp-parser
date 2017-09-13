@@ -60,6 +60,7 @@ Assert.assertTrue(bindedExp.getValue());
       Map<String,Object> bindings = new HashMap<String,Object>();
       bindings.put("sh", "some_value");
       bindings.put("dim2", "orxyzevi");
+      bindings.put("dim1", "some_value");
       bindings.put("m1", 100);
       Expression<Boolean> expr = parser.parseCondition(json,  false);
       BindedExpression<Boolean> bindedExpr = expr.bind(bindings);
