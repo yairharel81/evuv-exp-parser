@@ -36,7 +36,7 @@
          <version>2.8.3</version>
       </dependency>
    </dependencies>
-   <artifactId>druid</artifactId>
+   <artifactId>druid-expr</artifactId>
    <build>
       <plugins>
          <plugin>
