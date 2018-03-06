@@ -1,18 +1,9 @@
 package com.evuv.builders;
 
 import com.evuv.EventProperty;
-import com.evuv.expressions.AndExpression;
-import com.evuv.expressions.BiggerThanExpression;
-import com.evuv.expressions.ComparableExpression;
-import com.evuv.expressions.ContainsExpression;
-import com.evuv.expressions.EqualityExpression;
-import com.evuv.expressions.ExistsExpression;
-import com.evuv.expressions.Expression;
-import com.evuv.expressions.NotExpression;
-import com.evuv.expressions.OrExpression;
-import com.evuv.expressions.SimplePropertyExpression;
-import com.evuv.expressions.SimpleValueExpression;
-import com.evuv.expressions.SmallerThanExpression;
+import com.evuv.expressions.*;
+
+import java.util.Collection;
 
 public class ExpressionBuilder {
 	
@@ -67,5 +58,14 @@ public class ExpressionBuilder {
 		EventProperty<T> ev = new EventProperty<T>();
 		ev.setPropertyName(name);
 		return new SimplePropertyExpression<T>(ev);
+	}
+
+	public static <T> InExpression<T> in(Expression<T> left, Expression<Collection<T>> right) {
+		InExpression<T> inExpression = new InExpression<>(left, right);
+		return inExpression;
+	}
+
+	public static <T extends Collection> CollectionValueExpression<T> collection(T t) {
+		return  new CollectionValueExpression<T>(t);
 	}
 }
