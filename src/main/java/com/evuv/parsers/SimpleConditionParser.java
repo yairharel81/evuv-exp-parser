@@ -1,6 +1,7 @@
 package com.evuv.parsers;
 
 
+import com.evuv.expressions.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,19 +9,12 @@ import org.json.JSONObject;
 import com.evuv.EventProperty;
 import com.evuv.GenericNumber;
 import com.evuv.exceptions.ParserException;
-import com.evuv.expressions.AndExpression;
-import com.evuv.expressions.BiggerThanExpression;
-import com.evuv.expressions.ContainsExpression;
-import com.evuv.expressions.EqualityExpression;
-import com.evuv.expressions.ExistsExpression;
-import com.evuv.expressions.Expression;
-import com.evuv.expressions.NotExpression;
-import com.evuv.expressions.OrExpression;
-import com.evuv.expressions.SimplePropertyExpression;
-import com.evuv.expressions.SimpleValueExpression;
-import com.evuv.expressions.SmallerThanExpression;
 import com.evuv.parsers.converters.DefaultPropertyNamingConverter;
 import com.evuv.parsers.converters.PropertyNamingConverter;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -107,6 +101,14 @@ public class SimpleConditionParser implements ConditionParser<Expression<Boolean
 			expr = new ContainsExpression<String>(left, right);
 		} else if (op != null && op.equals(FILTER_EXISTS_OP)){
 			expr = new ExistsExpression<String>(left);
+		} else if (op != null && op.equals(FILTER_IN_OP)){
+			Set<String> values = new HashSet<>();
+			JSONArray array =  filter.getJSONArray("value");
+			for (int i = 0; i < array.length(); i++) {
+				values.add(array.getString(i));
+			}
+			CollectionValueExpression<Collection<String>, String> collection = new CollectionValueExpression<>(values);
+			expr = new InExpression<>(left, collection);
 		} else {
 			expr = new EqualityExpression<String>(left, right);
 		}

@@ -13,6 +13,10 @@ public class InExpression<T> implements Expression<Boolean>, BindedExpression<Bo
     Expression<T> left;
     Expression<Collection<T>> right;
 
+    public InExpression() {
+        this(null, null);
+    }
+
     public InExpression(Expression<T> left, Expression<Collection<T>> right) {
         this.left = left;
         this.right = right;

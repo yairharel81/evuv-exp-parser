@@ -60,12 +60,12 @@ public class ExpressionBuilder {
 		return new SimplePropertyExpression<T>(ev);
 	}
 
-	public static <T> InExpression<T> in(Expression<T> left, Expression<Collection<T>> right) {
+	public static <T> Expression<Boolean> in(Expression<T> left, Expression<Collection<T>> right) {
 		InExpression<T> inExpression = new InExpression<>(left, right);
 		return inExpression;
 	}
 
-	public static <T extends Collection> CollectionValueExpression<T> collection(T t) {
-		return  new CollectionValueExpression<T>(t);
+	public static <T extends Collection<U>, U> CollectionValueExpression<T, U> collection(T t) {
+		return  new CollectionValueExpression<>(t);
 	}
 }

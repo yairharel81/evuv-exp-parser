@@ -5,7 +5,7 @@ import com.evuv.exceptions.EventBindingException;
 import java.util.Collection;
 import java.util.Map;
 
-public class CollectionValueExpression <T extends Collection> implements Expression<T>, BindedExpression<T> {
+public class CollectionValueExpression <T extends Collection<U>, U> implements Expression<T>, BindedExpression<T> {
     private T value;
 
     public CollectionValueExpression(T val) {
