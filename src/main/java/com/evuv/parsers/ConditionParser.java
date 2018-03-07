@@ -29,6 +29,7 @@ public interface ConditionParser<T> {
 	
 	public static final String FILTER_CONTAINS_OP = "contains";
 	public static final String FILTER_EXISTS_OP = "exists";
+	public static final String FILTER_IN_OP = "in";
 	public static final String MEASURE_TYPE = "measure";
 	public static final String SELECTOR_TYPE = "selector";
 	

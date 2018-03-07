@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -967,11 +968,81 @@ public class SimpleParserTest extends BaseTest {
 
         Assert.assertTrue(! expr.getValue());
     }
-	
-	
-	
-	
-	
-	
+
+
+
+    @Test
+    public void testInCondition() throws IOException, JSONException, ParserException, EventBindingException {
+
+		/*
+		 * {
+			   "filter": {
+			            "op": "in",
+			            "measure": "session_country",
+			            "type": "selector",
+			            "value": ["utopia", "europe"]
+			         }
+			}
+		 */
+
+
+
+        String event = loadEvent("event3.txt");
+
+        Map<String, Object> eventAsMap = convertJsonToMap(event);
+
+        JSONObject query = new JSONObject();
+        JSONObject inner = new JSONObject();
+        query.put("filter", inner);
+        inner.put("type", "selector");
+        inner.put("dimension", "session_country");
+        inner.put("op", "in");
+        List<String> countries = new ArrayList<>();
+        countries.add("utopia");
+        countries.add("europe");
+        JSONArray array = new JSONArray(countries);
+        inner.put("value", array);
+        BindedExpression<Boolean> expr = parser.parseCondition(query.toString(),  false).bind(eventAsMap);
+
+        Assert.assertTrue( expr.getValue());
+    }
+
+
+
+    @Test
+    public void testInFailedCondition() throws IOException, JSONException, ParserException, EventBindingException {
+
+		/*
+		 * {
+			   "filter": {
+			            "op": "in",
+			            "measure": "session_country",
+			            "type": "selector",
+			            "value": ["asia", "europe"]
+			         }
+			}
+		 */
+
+
+
+        String event = loadEvent("event3.txt");
+
+        Map<String, Object> eventAsMap = convertJsonToMap(event);
+
+        JSONObject query = new JSONObject();
+        JSONObject inner = new JSONObject();
+        query.put("filter", inner);
+        inner.put("type", "selector");
+        inner.put("dimension", "session_country");
+        inner.put("op", "in");
+        List<String> countries = new ArrayList<>();
+        countries.add("asia");
+        countries.add("europe");
+        JSONArray array = new JSONArray(countries);
+        inner.put("value", array);
+        BindedExpression<Boolean> expr = parser.parseCondition(query.toString(),  false).bind(eventAsMap);
+
+        Assert.assertFalse( expr.getValue());
+    }
 	
 }

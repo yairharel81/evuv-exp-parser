@@ -1,17 +1,18 @@
 package com.evuv.builders;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.evuv.BaseTest;
 import com.evuv.GenericNumber;
 import com.evuv.exceptions.EventBindingException;
 import com.evuv.expressions.BindedExpression;
 import com.evuv.expressions.ComparableExpression;
 import com.evuv.expressions.Expression;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class ExpressionBuilderTest  extends BaseTest {
 	
@@ -195,7 +196,41 @@ public class ExpressionBuilderTest  extends BaseTest {
 	}
 	
 	
-	
+	@Test
+	public void testInExpression() throws EventBindingException {
+		Expression<String> left = ExpressionBuilder.prop("A", String.class);
+		Collection<String> values = new HashSet<>();
+		values.add("test1");
+		values.add("test2");
+		values.add("test4");
+		Expression<Collection<String>> right = ExpressionBuilder.collection(values);
+
+		Expression<Boolean> inExpression = ExpressionBuilder.in(left, right);
+
+		Map<String, Object> bindings = new HashMap<>();
+		bindings.put("A", "test1");
+
+		BindedExpression<Boolean> bindedExp = inExpression.bind(bindings);
+		Assert.assertTrue(bindedExp.getValue());
+	}
+
+	@Test
+	public void testInExpressionNegative() throws EventBindingException {
+		Expression<String> left = ExpressionBuilder.prop("A", String.class);
+		Collection<String> values = new HashSet<>();
+		values.add("test1");
+		values.add("test2");
+		values.add("test4");
+		Expression<Collection<String>> right = ExpressionBuilder.collection(values);
+
+		Expression<Boolean> inExpression = ExpressionBuilder.in(left, right);
+
+		Map<String, Object> bindings = new HashMap<>();
+		bindings.put("A", "test3");
+
+		BindedExpression<Boolean> bindedExp = inExpression.bind(bindings);
+		Assert.assertFalse(bindedExp.getValue());
+	}
 	
 	
 	
